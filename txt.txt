@@ -1,0 +1,2 @@
+ybZd6WAe81wTVE89
+mongodb+srv://nitesh22061997:ybZd6WAe81wTVE89@cluster0.db7fuk1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
