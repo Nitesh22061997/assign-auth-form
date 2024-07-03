@@ -15,7 +15,7 @@ export default function Username() {
 
     const formik = useFormik({
         initialValues: {
-            username: 'example123'
+            username: ''
         },
         validate: usernameValidate,
         validateOnBlur: false,
@@ -54,7 +54,6 @@ export default function Username() {
                         <div className="text-center py-4">
                             <span className='text-gray-500'>Not a Member <Link className='text-red-500' to="/register">Register Now</Link></span>
                         </div>
-
                     </form>
 
                 </div>
