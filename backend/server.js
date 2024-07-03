@@ -5,6 +5,9 @@ import connect from './databse/conn.js';
 import router from './router/route.js';
 import path from "path"
 
+
+const port = process.env.PORT || 8080;
+
 const app = express();
 
 /** middlewares */
@@ -14,12 +17,11 @@ app.use(morgan('tiny'));
 app.disable('x-powered-by'); // less hackers know about our stack
 
 
-const port = 8080;
 
 /** HTTP GET Request */
-app.get('/', (req, res) => {
-    res.status(201).json("Home GET Request");
-});
+// app.get('/', (req, res) => {
+//     res.status(201).json("Home GET Request");
+// });
 
 
 // ****************   DEPLOYMENT CODE         *********************
