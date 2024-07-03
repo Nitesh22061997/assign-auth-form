@@ -1,32 +1,30 @@
 import toast from 'react-hot-toast'
-// import { authenticate } from './helper'
+import { authenticate } from './helper'
 
-
-
-// /** validate login page username */
+/** validate login page username */
 export async function usernameValidate(values) {
     const errors = usernameVerify({}, values);
 
-    // if (values.username) {
-    //     // check user exist or not
-    //     const { status } = await authenticate(values.username);
+    if (values.username) {
+        // check user exist or not
+        const { status } = await authenticate(values.username);
 
-    //     if (status !== 200) {
-    //         errors.exist = toast.error('User does not exist...!')
-    //     }
-    // }
+        if (status !== 200) {
+            errors.exist = toast.error('User does not exist...!')
+        }
+    }
 
     return errors;
 }
 
-// /** validate password */
+/** validate password */
 export async function passwordValidate(values) {
     const errors = passwordVerify({}, values);
 
     return errors;
 }
 
-// /** validate reset password */
+/** validate reset password */
 export async function resetPasswordValidation(values) {
     const errors = passwordVerify({}, values);
 
@@ -37,25 +35,26 @@ export async function resetPasswordValidation(values) {
     return errors;
 }
 
-// /** validate register form */
+/** validate register form */
 export async function registerValidation(values) {
     const errors = usernameVerify({}, values);
     passwordVerify(errors, values);
     emailVerify(errors, values);
+    ageVerify(errors, values);
 
     return errors;
 }
 
-// /** validate profile page */
+/** validate profile page */
 export async function profileValidation(values) {
     const errors = emailVerify({}, values);
     return errors;
 }
 
 
-// /** ************************************************* */
+/** ************************************************* */
 
-// /** validate password */
+/** validate password */
 function passwordVerify(errors = {}, values) {
     /* eslint-disable no-useless-escape */
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -85,7 +84,7 @@ function usernameVerify(error = {}, values) {
     return error;
 }
 
-// /** validate email */
+/** validate email */
 function emailVerify(error = {}, values) {
     if (!values.email) {
         error.email = toast.error("Email Required...!");
@@ -94,6 +93,18 @@ function emailVerify(error = {}, values) {
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         error.email = toast.error("Invalid email address...!")
     }
+
     return error;
 }
+/*age validation */
+function ageVerify(error = {}, values) {
+    if (!values.age) {
+        error.age = toast.error("Age Required...!");
+    } else if (isNaN(values.age)) {
+        error.age = toast.error("Age must be a number...!");
+    } else if (parseInt(values.age) < 18) {
+        error.age = toast.error("You must be at least 18 years old to register...!");
+    }
 
+    return error;
+}

@@ -1,57 +1,56 @@
-import React from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom"
-
-/** import all components*/
-import Profile from "./components/Profile"
-import UserName from "./components/UserName"
-import Register from "./components/Register"
-import Password from "./components/Password"
-import Recovery from "./components/Recovery"
-import Reset from "./components/Reset";
-import PageNotFound from "./components/PageNotFound";
+import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 
+/** import all components */
+import Username from './components/UserName';
+import Password from './components/Password';
+import Register from './components/Register';
+import Profile from './components/Profile';
+import Recovery from './components/Recovery';
+import Reset from './components/Reset';
+import PageNotFound from './components/PageNotFound';
+
+
+/** auth middleware */
+import { AuthorizeUser, ProtectRoute } from './middleware/auth'
 
 /** root routes */
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <UserName />
+    path: '/',
+    element: <Username></Username>
   },
   {
-    path: "/register",
-    element: <Register />
+    path: '/register',
+    element: <Register></Register>
   },
   {
-    path: "/password",
-    element: <Password />
+    path: '/password',
+    element: <ProtectRoute><Password /></ProtectRoute>
   },
   {
-    path: "/profile",
-    element: <Profile />
+    path: '/profile',
+    element: <AuthorizeUser><Profile /></AuthorizeUser>
   },
   {
-    path: "/recovery",
-    element: <Recovery />
+    path: '/recovery',
+    element: <Recovery></Recovery>
   },
   {
-    path: "/reset",
-    element: <Reset />
+    path: '/reset',
+    element: <Reset></Reset>
   },
   {
-    path: "*",
-    element: <PageNotFound />
+    path: '*',
+    element: <PageNotFound></PageNotFound>
   },
 ])
 
-function App() {
+export default function App() {
   return (
     <main>
-      <RouterProvider router={router}>
-
-      </RouterProvider>
+      <RouterProvider router={router}></RouterProvider>
     </main>
-  );
+  )
 }
-
-export default App;

@@ -1,17 +1,14 @@
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
+import axios from "axios"
+import { jwtDecode } from "jwt-decode"
+// import toast from "react-hot-toast";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
-
-
-/** Make API Requests */
-
 
 /** To get username from Token */
 export async function getUsername() {
     const token = localStorage.getItem('token')
     if (!token) return Promise.reject("Cannot find Token");
-    let decode = jwt_decode(token)
+    let decode = jwtDecode(token)
     return decode;
 }
 
@@ -20,6 +17,7 @@ export async function authenticate(username) {
     try {
         return await axios.post('/api/authenticate', { username })
     } catch (error) {
+        console.log(error);
         return { error: "Username doesn't exist...!" }
     }
 }
@@ -33,6 +31,7 @@ export async function getUser({ username }) {
         return { error: "Password doesn't Match...!" }
     }
 }
+
 
 /** register user function */
 export async function registerUser(credentials) {
@@ -51,6 +50,7 @@ export async function registerUser(credentials) {
         return Promise.reject({ error })
     }
 }
+
 
 /** login function */
 export async function verifyPassword({ username, password }) {
@@ -93,6 +93,7 @@ export async function generateOTP(username) {
         return Promise.reject({ error });
     }
 }
+
 
 /** verify OTP */
 export async function verifyOTP({ username, code }) {
