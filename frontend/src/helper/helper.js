@@ -1,6 +1,5 @@
 import axios from "axios"
 import { jwtDecode } from "jwt-decode"
-// import toast from "react-hot-toast";
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
@@ -29,9 +28,9 @@ export async function getUser({ username }) {
         return { data };
     } catch (error) {
         return { error: "Password doesn't Match...!" }
+        // console.log(error);
     }
 }
-
 
 /** register user function */
 export async function registerUser(credentials) {
@@ -51,7 +50,6 @@ export async function registerUser(credentials) {
     }
 }
 
-
 /** login function */
 export async function verifyPassword({ username, password }) {
     try {
@@ -60,17 +58,15 @@ export async function verifyPassword({ username, password }) {
             return Promise.resolve({ data });
         }
     } catch (error) {
-        return Promise.reject({ error: "Password doesn't Match...!" })
+        return Promise.reject("Password doesn't Match...!");
     }
 }
 
 /** update user profile function */
 export async function updateUser(response) {
     try {
-
         const token = await localStorage.getItem('token');
         const data = await axios.put('/api/updateuser', response, { headers: { "Authorization": `Bearer ${token}` } });
-
         return Promise.resolve({ data })
     } catch (error) {
         return Promise.reject({ error: "Couldn't Update Profile...!" })
@@ -94,11 +90,12 @@ export async function generateOTP(username) {
     }
 }
 
-
 /** verify OTP */
 export async function verifyOTP({ username, code }) {
     try {
         const { data, status } = await axios.get('/api/verifyOTP', { params: { username, code } })
+        if (status === 201) {
+        }
         return { data, status }
     } catch (error) {
         return Promise.reject(error);
@@ -109,6 +106,8 @@ export async function verifyOTP({ username, code }) {
 export async function resetPassword({ username, password }) {
     try {
         const { data, status } = await axios.put('/api/resetPassword', { username, password });
+        if (status === 201) {
+        }
         return Promise.resolve({ data, status })
     } catch (error) {
         return Promise.reject({ error })
